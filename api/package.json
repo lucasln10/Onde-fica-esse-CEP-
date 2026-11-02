@@ -1,0 +1,19 @@
+{
+  "name": "viacep-geocode-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "API que consulta ViaCEP e geocodifica o endereço com OpenStreetMap/Nominatim.",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
