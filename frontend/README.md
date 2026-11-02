@@ -1,32 +1,67 @@
-# React + TypeScript + Vite
+# Frontend — ViaCEP no Mapa
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Interface web do projeto **ViaCEP no Mapa**, construída com React 19, TypeScript, Vite, styled-components e MapLibre GL JS.
 
-Currently, two official plugins are available:
+A documentação completa, incluindo arquitetura, API e instruções do backend, está no [README principal](../README.md).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Responsabilidades
 
-## React Compiler
+- Receber e formatar o CEP digitado.
+- Buscar automaticamente quando os 8 dígitos estiverem completos.
+- Aplicar debounce e cancelar requisições anteriores.
+- Exibir estados de carregamento, erro e resultado vazio.
+- Mostrar o endereço encontrado e as coordenadas.
+- Exibir e focar a localização no mapa com marcador e popup.
+- Adaptar o layout para desktop e celular.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Scripts
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```powershell
+npm install
+npm run dev      # servidor de desenvolvimento
+npm run build    # typecheck + build de produção
+npm run preview  # pré-visualização do build
+npm run lint     # Oxlint
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## API
+
+Por padrão, o frontend chama a API no mesmo hostname da página, na porta `3001`:
+
+```text
+http://<host-atual>:3001/api/cep/:cep
+```
+
+Para usar outro endereço, crie um arquivo `.env.local`:
+
+```env
+VITE_API_URL=http://192.168.0.10:3001
+```
+
+## Estrutura
+
+```text
+src/
+├── components/
+│   ├── ui/Button.tsx
+│   ├── AddressResultCard.tsx
+│   ├── AppLayout.tsx
+│   ├── BrandHeader.tsx
+│   ├── EmptyState.tsx
+│   ├── ErrorAlert.tsx
+│   ├── MapView.tsx
+│   ├── PanelFooter.tsx
+│   ├── SearchField.tsx
+│   └── index.ts
+├── hooks/useCepSearch.ts
+├── lib/
+│   ├── api.ts
+│   └── cep.ts
+├── styles/GlobalStyle.ts
+├── types/
+│   ├── cep.ts
+│   └── styled.d.ts
+├── App.tsx
+├── main.tsx
+└── theme.ts
+```
